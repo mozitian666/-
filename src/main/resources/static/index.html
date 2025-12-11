@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Selection System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        .loading-container {
+            text-align: center;
+            color: white;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .loading-text {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .loading-subtext {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-container">
+        <div class="spinner"></div>
+        <div class="loading-text">Course Selection System</div>
+        <div class="loading-subtext">Loading your dashboard...</div>
+    </div>
+    
+    <script src="/js/api.js"></script>
+    <script>
+        (async () => {
+            try {
+                const user = await getCurrentUser();
+                if (user.role === 'TEACHER') {
+                    window.location.href = 'teacher.html';
+                } else if (user.role === 'STUDENT') {
+                    window.location.href = 'student.html';
+                } else {
+                    alert('Unknown role');
+                    window.location.href = 'login.html';
+                }
+            } catch (e) {
+                console.error('Authentication error:', e);
+                window.location.href = 'login.html';
+            }
+        })();
+    </script>
+</body>
+</html>

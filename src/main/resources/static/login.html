@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Selection System - Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--spacing-md);
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .login-header h1 {
+            color: white;
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        .login-header p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: var(--font-size-base);
+        }
+        
+        .login-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-xl);
+            margin-bottom: var(--spacing-md);
+            animation: slideUp var(--transition-normal);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: var(--spacing-lg);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-light);
+        }
+        
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+        }
+        
+        .form-footer a:hover {
+            color: var(--primary-dark);
+            text-decoration: underline;
+        }
+        
+        .error-message {
+            background-color: #fee2e2;
+            border: 1px solid #fecaca;
+            color: #991b1b;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-sm);
+            display: none;
+        }
+        
+        .error-message.show {
+            display: block;
+            animation: fadeIn var(--transition-fast);
+        }
+        
+        .success-message {
+            background-color: #d1fae5;
+            border: 1px solid #a7f3d0;
+            color: #065f46;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-md);
+            font-size: var(--font-size-sm);
+            display: none;
+        }
+        
+        .success-message.show {
+            display: block;
+            animation: fadeIn var(--transition-fast);
+        }
+        
+        @media (max-width: 480px) {
+            .login-card {
+                padding: var(--spacing-lg);
+            }
+            
+            .login-header h1 {
+                font-size: var(--font-size-2xl);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Course Selection System</h1>
+            <p>Sign in to access your courses</p>
+        </div>
+        
+        <div class="login-card" id="loginCard">
+            <div class="card-header" style="border: none; padding: 0; margin-bottom: var(--spacing-lg);">
+                <h2 class="card-title text-center">Sign In</h2>
+                <p class="card-description text-center">Welcome back! Please enter your credentials.</p>
+            </div>
+            
+            <div id="loginError" class="error-message"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" class="form-control" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                    <span>Sign In</span>
+                </button>
+            </form>
+            
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" onclick="toggleRegister()">Sign up here</a></p>
+            </div>
+        </div>
+        
+        <div class="login-card" id="registerCard" style="display: none;">
+            <div class="card-header" style="border: none; padding: 0; margin-bottom: var(--spacing-lg);">
+                <h2 class="card-title text-center">Create Account</h2>
+                <p class="card-description text-center">Join our course selection system</p>
+            </div>
+            
+            <div id="regError" class="error-message"></div>
+            <div id="regSuccess" class="success-message"></div>
+            
+            <form id="registerForm">
+                <div class="form-group">
+                    <label class="form-label" for="regUsername">Username</label>
+                    <input type="text" id="regUsername" class="form-control" placeholder="Choose a username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="regPassword">Password</label>
+                    <input type="password" id="regPassword" class="form-control" placeholder="Create a password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="regFullName">Full Name</label>
+                    <input type="text" id="regFullName" class="form-control" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label" for="regRole">Role</label>
+                    <select id="regRole" class="form-select" required>
+                        <option value="STUDENT">Student</option>
+                        <option value="TEACHER">Teacher</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                    <span>Create Account</span>
+                </button>
+            </form>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" onclick="toggleRegister()">Sign in here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script>
+        function toggleRegister() {
+            const loginCard = document.getElementById('loginCard');
+            const registerCard = document.getElementById('registerCard');
+            const loginError = document.getElementById('loginError');
+            const regError = document.getElementById('regError');
+            const regSuccess = document.getElementById('regSuccess');
+            
+            if (registerCard.style.display === 'none') {
+                loginCard.style.display = 'none';
+                registerCard.style.display = 'block';
+                loginError.classList.remove('show');
+                regError.classList.remove('show');
+                regSuccess.classList.remove('show');
+            } else {
+                loginCard.style.display = 'block';
+                registerCard.style.display = 'none';
+                loginError.classList.remove('show');
+                regError.classList.remove('show');
+                regSuccess.classList.remove('show');
+            }
+        }
+        
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+            setTimeout(() => errorElement.classList.remove('show'), 5000);
+        }
+        
+        function showSuccess(elementId, message) {
+            const successElement = document.getElementById(elementId);
+            successElement.textContent = message;
+            successElement.classList.add('show');
+            setTimeout(() => successElement.classList.remove('show'), 5000);
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            if (!username || !password) {
+                showError('loginError', 'Please fill in all fields');
+                return;
+            }
+            
+            try {
+                await login(username, password);
+                window.location.href = '/index.html';
+            } catch (err) {
+                showError('loginError', err.message || 'Login failed. Please try again.');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+            const fullName = document.getElementById('regFullName').value.trim();
+            const role = document.getElementById('regRole').value;
+            
+            if (!username || !password || !fullName) {
+                showError('regError', 'Please fill in all fields');
+                return;
+            }
+            
+            if (username.length < 3) {
+                showError('regError', 'Username must be at least 3 characters long');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('regError', 'Password must be at least 6 characters long');
+                return;
+            }
+            
+            const user = {
+                username: username,
+                password: password,
+                fullName: fullName,
+                role: role
+            };
+            
+            try {
+                await register(user);
+                showSuccess('regSuccess', 'Registration successful! Redirecting to login...');
+                document.getElementById('registerForm').reset();
+                setTimeout(() => toggleRegister(), 2000);
+            } catch (err) {
+                showError('regError', err.message || 'Registration failed. Please try again.');
+            }
+        });
+        
+        // Add input animations
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+                this.parentElement.style.transition = 'transform var(--transition-fast)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>

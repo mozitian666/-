@@ -1,0 +1,23 @@
+=========================================
+DEFAULT USER ACCOUNTS
+=========================================
+
+TEACHERS:
+1. Username: teacher_john
+   Password: password123
+   Name:     John Doe
+
+2. Username: teacher_jane
+   Password: password123
+   Name:     Jane Smith
+
+STUDENTS:
+1. Username: student_alice
+   Password: password123
+   Name:     Alice Brown
+
+2. Username: student_bob
+   Password: password123
+   Name:     Bob Wilson
+
+NOTE: Passwords are case-sensitive.

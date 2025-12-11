@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login - Course Selection System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .test-container {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 {
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #3b82f6;
+        }
+        .test-section h3 {
+            color: #1f2937;
+            margin-top: 0;
+        }
+        .credentials {
+            background: #e0e7ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        .btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background 0.2s;
+            margin: 5px;
+        }
+        .btn:hover {
+            background: #2563eb;
+        }
+        .btn-success {
+            background: #10b981;
+        }
+        .btn-success:hover {
+            background: #059669;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        .result.success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #a7f3d0;
+        }
+        .result.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fecaca;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎓 Course Selection System - Test Login</h1>
+        
+        <div class="test-section">
+            <h3>👨‍🏫 Teacher Accounts</h3>
+            <div class="credentials">
+                Username: teacher_john<br>
+                Password: password123<br>
+                Full Name: John Doe
+            </div>
+            <div class="credentials">
+                Username: teacher_jane<br>
+                Password: password123<br>
+                Full Name: Jane Smith
+            </div>
+            <button class="btn btn-success" onclick="testTeacherLogin()">Test Teacher Login</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>👨‍🎓 Student Accounts</h3>
+            <div class="credentials">
+                Username: student_alice<br>
+                Password: password123<br>
+                Full Name: Alice Brown
+            </div>
+            <div class="credentials">
+                Username: student_bob<br>
+                Password: password123<br>
+                Full Name: Bob Johnson
+            </div>
+            <button class="btn btn-success" onclick="testStudentLogin()">Test Student Login</button>
+        </div>
+        
+        <div class="test-section">
+            <h3>🌐 Direct Links</h3>
+            <button class="btn" onclick="window.open('login.html', '_blank')">Open Login Page</button>
+            <button class="btn" onclick="window.open('teacher.html', '_blank')">Open Teacher Dashboard</button>
+            <button class="btn" onclick="window.open('student.html', '_blank')">Open Student Dashboard</button>
+        </div>
+        
+        <div id="result"></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script>
+        function showResult(message, isSuccess) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = `result ${isSuccess ? 'success' : 'error'}`;
+            resultDiv.textContent = message;
+        }
+        
+        async function testTeacherLogin() {
+            try {
+                await login('teacher_john', 'password123');
+                showResult('✅ Teacher login successful! Redirecting to teacher dashboard...', true);
+                setTimeout(() => {
+                    window.location.href = 'teacher.html';
+                }, 1500);
+            } catch (error) {
+                showResult(`❌ Teacher login failed: ${error.message}`, false);
+            }
+        }
+        
+        async function testStudentLogin() {
+            try {
+                await login('student_alice', 'password123');
+                showResult('✅ Student login successful! Redirecting to student dashboard...', true);
+                setTimeout(() => {
+                    window.location.href = 'student.html';
+                }, 1500);
+            } catch (error) {
+                showResult(`❌ Student login failed: ${error.message}`, false);
+            }
+        }
+        
+        // Auto-test on page load
+        window.addEventListener('load', () => {
+            showResult('🚀 Test page loaded. Click the buttons above to test different user roles.', true);
+        });
+    </script>
+</body>
+</html>

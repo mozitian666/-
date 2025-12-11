@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard - Course Selection System</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .dashboard-header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-light);
+            box-shadow: var(--shadow-sm);
+            padding: var(--spacing-lg) 0;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-title h1 {
+            color: var(--primary);
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .header-subtitle {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            margin-top: var(--spacing-xs);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .stat-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            border-left: 4px solid var(--primary);
+            transition: transform var(--transition-fast);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .stat-value {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--spacing-xs);
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .course-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition-fast);
+            border: 1px solid var(--border-light);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .course-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        
+        .course-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .course-info h3 {
+            color: var(--text-primary);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin: 0 0 var(--spacing-xs) 0;
+        }
+        
+        .course-code {
+            color: var(--primary);
+            font-weight: 500;
+            font-size: var(--font-size-sm);
+            background: rgba(30, 64, 175, 0.1);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            display: inline-block;
+        }
+        
+        .course-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+        
+        .course-detail {
+            text-align: center;
+            padding: var(--spacing-sm);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+        
+        .course-detail-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: var(--font-size-base);
+        }
+        
+        .course-detail-label {
+            color: var(--text-secondary);
+            font-size: var(--font-size-xs);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: var(--spacing-xs);
+        }
+        
+        .course-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: flex-end;
+        }
+        
+        .btn-view {
+            background-color: var(--info);
+            color: white;
+        }
+        
+        .btn-view:hover {
+            background-color: #0891b2;
+        }
+        
+        .btn-delete {
+            background-color: var(--error);
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background-color: #dc2626;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: scale(0.9);
+            transition: transform var(--transition-normal);
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+        
+        .student-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .student-item {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .student-item:last-child {
+            border-bottom: none;
+        }
+        
+        .student-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .student-username {
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-2xl);
+            color: var(--text-secondary);
+        }
+        
+        .empty-state h3 {
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+        
+        @media (max-width: 768px) {
+            .course-details {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .course-actions {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-title">
+                    <h1>Teacher Dashboard</h1>
+                    <p class="header-subtitle">Manage your courses and track student enrollment</p>
+                </div>
+                <button class="btn btn-secondary" onclick="logout()">
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Stats Overview -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="totalCourses">0</div>
+                <div class="stat-label">Total Courses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalStudents">0</div>
+                <div class="stat-label">Total Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="totalCredits">0</div>
+                <div class="stat-label">Total Credits</div>
+            </div>
+        </div>
+
+        <!-- Add New Course -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Add New Course</h2>
+                <p class="card-description">Create a new course for students to enroll in</p>
+            </div>
+            <div id="msg" class="alert alert-success hidden"></div>
+            <div id="err" class="alert alert-error hidden"></div>
+            
+            <form id="addCourseForm">
+                <div class="grid grid-cols-2">
+                    <div class="form-group">
+                        <label class="form-label" for="code">Course Code</label>
+                        <input type="text" id="code" class="form-control" placeholder="e.g., CS101" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="name">Course Name</label>
+                        <input type="text" id="name" class="form-control" placeholder="e.g., Introduction to Computer Science" required>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-3">
+                    <div class="form-group">
+                        <label class="form-label" for="credits">Credits</label>
+                        <input type="number" id="credits" class="form-control" min="1" max="6" placeholder="3" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="capacity">Capacity</label>
+                        <input type="number" id="capacity" class="form-control" min="1" max="200" placeholder="50" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="dayOfWeek">Day</label>
+                        <select id="dayOfWeek" class="form-select" required>
+                            <option value="MONDAY">Monday</option>
+                            <option value="TUESDAY">Tuesday</option>
+                            <option value="WEDNESDAY">Wednesday</option>
+                            <option value="THURSDAY">Thursday</option>
+                            <option value="FRIDAY">Friday</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-2">
+                    <div class="form-group">
+                        <label class="form-label" for="startTime">Start Time</label>
+                        <input type="time" id="startTime" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="endTime">End Time</label>
+                        <input type="time" id="endTime" class="form-control" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Prerequisites</label>
+                    <div id="prereqList" class="grid grid-cols-3"></div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <span>Create Course</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- My Courses -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">My Courses</h2>
+                <p class="card-description">Manage your existing courses and view enrolled students</p>
+            </div>
+            
+            <div id="coursesContainer">
+                <div class="empty-state">
+                    <h3>No courses yet</h3>
+                    <p>Create your first course using the form above</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student List Modal -->
+    <div id="studentModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Enrolled Students</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div id="studentListContainer">
+                <ul class="student-list" id="studentList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script>
+        let courses = [];
+        
+        async function loadCourses() {
+            try {
+                courses = await fetchJson('/api/teacher/courses');
+                displayCourses();
+                updateStats();
+            } catch (e) {
+                console.error('Error loading courses:', e);
+                showError('Failed to load courses');
+            }
+        }
+
+        function displayCourses() {
+            const container = document.getElementById('coursesContainer');
+            
+            if (courses.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h3>No courses yet</h3>
+                        <p>Create your first course using the form above</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = courses.map(course => `
+                <div class="course-card">
+                    <div class="course-header">
+                        <div class="course-info">
+                            <h3>${course.name}</h3>
+                            <span class="course-code">${course.code}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="course-details">
+                        <div class="course-detail">
+                            <div class="course-detail-value">${course.credits}</div>
+                            <div class="course-detail-label">Credits</div>
+                        </div>
+                        <div class="course-detail">
+                            <div class="course-detail-value">${course.capacity}</div>
+                            <div class="course-detail-label">Capacity</div>
+                        </div>
+                        <div class="course-detail">
+                            <div class="course-detail-value">${course.dayOfWeek}</div>
+                            <div class="course-detail-label">Day</div>
+                        </div>
+                        <div class="course-detail">
+                            <div class="course-detail-value">${course.startTime.slice(0, 5)}-${course.endTime.slice(0, 5)}</div>
+                            <div class="course-detail-label">Time</div>
+                        </div>
+                        <div class="course-detail">
+                            <div class="course-detail-value">${(course.prerequisites || []).length}</div>
+                            <div class="course-detail-label">Prereqs</div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-actions">
+                        <button class="btn btn-sm btn-view" onclick="viewStudents(${course.id})">
+                            <span>View Students (${course.enrolledCount || 0})</span>
+                        </button>
+                        <button class="btn btn-sm btn-delete" onclick="deleteCourse(${course.id})">
+                            <span>Delete</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const totalCourses = courses.length;
+            const totalStudents = courses.reduce((sum, course) => sum + (course.enrolledCount || 0), 0);
+            const totalCredits = courses.reduce((sum, course) => sum + course.credits, 0);
+
+            document.getElementById('totalCourses').textContent = totalCourses;
+            document.getElementById('totalStudents').textContent = totalStudents;
+            document.getElementById('totalCredits').textContent = totalCredits;
+        }
+
+        async function viewStudents(courseId) {
+            try {
+                const enrollments = await fetchJson(`/api/teacher/courses/${courseId}/students`);
+                const list = document.getElementById('studentList');
+                list.innerHTML = '';
+                
+                if (enrollments.length === 0) {
+                    list.innerHTML = '<li class="student-item"><div>No students enrolled yet</div></li>';
+                } else {
+                    enrollments.forEach(enrollment => {
+                        const li = document.createElement('li');
+                        li.className = 'student-item';
+                        li.innerHTML = `
+                            <div>
+                                <div class="student-name">${enrollment.student.fullName}</div>
+                                <div class="student-username">${enrollment.student.username}</div>
+                            </div>
+                        `;
+                        list.appendChild(li);
+                    });
+                }
+                
+                document.getElementById('studentModal').classList.add('active');
+            } catch (e) {
+                console.error('Error loading students:', e);
+                showError('Failed to load enrolled students');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('studentModal').classList.remove('active');
+        }
+
+        async function deleteCourse(id) {
+            if (!confirm('Are you sure you want to delete this course? This action cannot be undone.')) {
+                return;
+            }
+            
+            try {
+                await fetch(`/api/teacher/courses/${id}`, { method: 'DELETE' });
+                showSuccess('Course deleted successfully');
+                loadCourses();
+            } catch (e) {
+                console.error('Error deleting course:', e);
+                showError('Failed to delete course');
+            }
+        }
+
+        function showSuccess(message) {
+            const msg = document.getElementById('msg');
+            msg.textContent = message;
+            msg.classList.remove('hidden');
+            setTimeout(() => msg.classList.add('hidden'), 3000);
+        }
+
+        function showError(message) {
+            const err = document.getElementById('err');
+            err.textContent = message;
+            err.classList.remove('hidden');
+            setTimeout(() => err.classList.add('hidden'), 5000);
+        }
+
+        async function loadPrereqOptions() {
+            try {
+                const allCourses = await fetchJson('/api/teacher/all-courses');
+                const list = document.getElementById('prereqList');
+                list.innerHTML = allCourses.map(c => `
+                    <div class="pr-item" style="display:flex; align-items:center; gap:8px; padding:4px 0;">
+                        <input type="checkbox" id="pr-${c.id}" class="prereq-option" value="${c.id}" style="width:16px; height:16px;">
+                        <label for="pr-${c.id}" class="pr-label" style="cursor:pointer;">${c.code} - ${c.name}</label>
+                    </div>
+                `).join('');
+            } catch (e) {
+                console.error('Error loading prerequisites:', e);
+            }
+        }
+
+        document.getElementById('addCourseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const course = {
+                code: document.getElementById('code').value.trim(),
+                name: document.getElementById('name').value.trim(),
+                credits: parseInt(document.getElementById('credits').value),
+                capacity: parseInt(document.getElementById('capacity').value),
+                dayOfWeek: document.getElementById('dayOfWeek').value,
+                startTime: document.getElementById('startTime').value,
+                endTime: document.getElementById('endTime').value,
+                prerequisiteIds: Array.from(document.querySelectorAll('.prereq-option:checked')).map(cb => parseInt(cb.value))
+            };
+
+            // Validate time
+            if (course.startTime >= course.endTime) {
+                showError('End time must be after start time');
+                return;
+            }
+
+            // Format time with seconds
+            if (course.startTime.length === 5) course.startTime += ':00';
+            if (course.endTime.length === 5) course.endTime += ':00';
+
+            try {
+                await fetchJson('/api/teacher/courses', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(course)
+                });
+                
+                showSuccess('Course added successfully!');
+                document.getElementById('addCourseForm').reset();
+                loadCourses();
+                loadPrereqOptions();
+            } catch (err) {
+                showError(err.message || 'Failed to add course');
+            }
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('studentModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Load courses and prerequisite options on page load
+        loadCourses();
+        loadPrereqOptions();
+    </script>
+</body>
+</html>

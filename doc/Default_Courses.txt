@@ -1,0 +1,33 @@
+=========================================
+DEFAULT COURSES
+=========================================
+
+1. Code:      CS101
+   Name:      Intro to Computer Science
+   Credits:   4
+   Teacher:   John Doe
+   Schedule:  MONDAY 09:00 - 11:00
+
+2. Code:      CS102
+   Name:      Data Structures
+   Credits:   4
+   Teacher:   John Doe
+   Schedule:  WEDNESDAY 09:00 - 11:00
+
+3. Code:      MATH101
+   Name:      Calculus I
+   Credits:   4
+   Teacher:   Jane Smith
+   Schedule:  TUESDAY 10:00 - 12:00
+
+4. Code:      ENG101
+   Name:      English Literature
+   Credits:   2
+   Teacher:   Jane Smith
+   Schedule:  FRIDAY 14:00 - 16:00
+
+5. Code:      PHY101
+   Name:      Physics I
+   Credits:   4
+   Teacher:   John Doe
+   Schedule:  THURSDAY 13:00 - 15:00
