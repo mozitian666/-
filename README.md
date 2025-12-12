@@ -18,8 +18,10 @@
 - Visit `http://localhost:8080/login.html`.
 - After successful registration you will see "Registration successful! Please login." then sign in using the newly created account.
 - Example screenshots:
-  - Login page: `./doc/images/logIn.png`
-  - Register page: `./doc/images/register.png`
+  - Login page: <img width="2422" height="1238" alt="signIn" src="https://github.com/user-attachments/assets/31346827-7bdf-4f16-b2d4-f2b8768a32b7" />
+
+  - Register page: <img width="1396" height="1168" alt="register" src="https://github.com/user-attachments/assets/6526ad40-acb8-4600-80c6-5b06338e1925" />
+
 
 ## Teacher Portal
 - Entry: after login, the app routes to `teacher.html` for Teacher accounts.
@@ -29,8 +31,10 @@
 - View enrolled students: click `View Students` on the course card to see a modal with name and username.
 - Delete course: click `Delete`. Ownership and relations are checked and removed accordingly.
 - Example screenshots:
-  - Teacher dashboard: `.doc/images/teacher_dashboard.png`
-  - Teacher course view: '.doc/images/teacherCourseView.png'
+  - Teacher dashboard: <img width="2106" height="1223" alt="teacher_dashborad" src="https://github.com/user-attachments/assets/2214980e-3dde-42b7-8aef-6d284dd204cf" />
+
+  - Teacher course view: <img width="1887" height="1184" alt="teacherCourseView" src="https://github.com/user-attachments/assets/a9851cea-aba9-4421-b4fe-1bcd96f06aa9" />
+
 
 ## Student Portal
 - Entry: after login, the app routes to `student.html` for Student accounts.
@@ -44,10 +48,12 @@
   - Time conflict: same day with overlapping times fails and indicates the conflicting course.
 - Drop: in `My Schedule`, click `Drop Course` on the course card.
 - Example screenshots:
-  - Student dashboard: `./doc/images/student_dashboard.png`
-  - Available courses: `./doc/images/available_courses.png`
-  - Weekly schedule: `.doc/images/schedule.png`
-  - Student enrolled courses: `./doc/images/studentEnrolled.png`
+  - Available courses: <img width="1931" height="1164" alt="available_courses" src="https://github.com/user-attachments/assets/bd25c9b0-f436-4f2e-9b05-95285fdfb395" />
+
+  - Weekly schedule: <img width="2090" height="1138" alt="schedule" src="https://github.com/user-attachments/assets/4fc53a04-764c-4af9-89ae-970b69515934" />
+
+  - Student enrolled courses: <img width="1978" height="1146" alt="studentEnrolled" src="https://github.com/user-attachments/assets/ed0d0a51-ab6a-4955-b6d9-489a14022305" />
+
 
 ## Common Issues & Troubleshooting
 - Login/Registration "Failed to fetch":
