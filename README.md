@@ -18,8 +18,8 @@
 - Visit `http://localhost:8080/login.html`.
 - After successful registration you will see "Registration successful! Please login." then sign in using the newly created account.
 - Example screenshots:
-  - Login page: `../images/logIn.png`
-  - Register page: `../images/register.png`
+  - Login page: `.doc/images/logIn.png`
+  - Register page: `.doc/images/register.png`
 
 ## Teacher Portal
 - Entry: after login, the app routes to `teacher.html` for Teacher accounts.
@@ -29,8 +29,8 @@
 - View enrolled students: click `View Students` on the course card to see a modal with name and username.
 - Delete course: click `Delete`. Ownership and relations are checked and removed accordingly.
 - Example screenshots:
-  - Teacher dashboard: `../images/teacher_dashboard.png`
-  - Teacher course view: '../images/teacherCourseView.png'
+  - Teacher dashboard: `.doc/images/teacher_dashboard.png`
+  - Teacher course view: '.doc/images/teacherCourseView.png'
 
 ## Student Portal
 - Entry: after login, the app routes to `student.html` for Student accounts.
@@ -44,10 +44,10 @@
   - Time conflict: same day with overlapping times fails and indicates the conflicting course.
 - Drop: in `My Schedule`, click `Drop Course` on the course card.
 - Example screenshots:
-  - Student dashboard: `../images/student_dashboard.png`
-  - Available courses: `../images/available_courses.png`
-  - Weekly schedule: `../images/schedule.png`
-  - Student enrolled courses: `../images/studentEnrolled.png`
+  - Student dashboard: `.doc/images/student_dashboard.png`
+  - Available courses: `.doc/images/available_courses.png`
+  - Weekly schedule: `.doc/images/schedule.png`
+  - Student enrolled courses: `.doc/images/studentEnrolled.png`
 
 ## Common Issues & Troubleshooting
 - Login/Registration "Failed to fetch":
